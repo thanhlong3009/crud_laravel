@@ -18,7 +18,7 @@ class TaskController extends Controller
     }
     public function index()
     {
-        $tasks = Auth::user()->tasks();//$tasks = $user->tasks;
+        $tasks = Auth::user()->tasks;//$tasks = $user->tasks;
         $tags = Tag::all();
         return view('crud.commondbody.index')->with(['tasks' => $tasks, 'tags' => $tags]);
     }
@@ -42,7 +42,8 @@ class TaskController extends Controller
     public function show($id)
     {
 
-        $task = Task::find($id);
+        $task=  Auth::user()->tasks->find($id);
+
 
         return view('crud.commondbody.show')->with('task', $task);
     }
@@ -56,6 +57,7 @@ class TaskController extends Controller
 
     public function viewUpdate(Task $task)
     {
+        $task=Auth::user()->tasks->find($task->id);
         return view('crud.commondbody.update')->with('task', $task);
     }
 
