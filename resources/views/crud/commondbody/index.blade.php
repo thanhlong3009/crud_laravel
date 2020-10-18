@@ -3,12 +3,19 @@
     <form action="/create" method="POST">
         @csrf
         Name: <input type="text" name="name">
-        Description: <input type="text" name="description" >
+         <br>
+        Description: <textarea id='summernote' type="text" name="description" ></textarea>
+
         {{--        status khi ma tao thi mac dinh la chua lam xong nen k phai nhap k lien quan nguoi dung --}}
         @foreach($tags as $tag)
             <input type="checkbox" name="tags[]" value="{{$tag->id}}"> {{$tag->name}}
         @endforeach
         <button class="btn btn-primary" type="submit">Add Task</button>
+        <ul class="alert text-danger">
+            @foreach($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+        </ul>
     </form>
     <table class="table">
         <thead>
@@ -28,7 +35,7 @@
             <tr>
                 <th scope="row">{{$task->id}}</th>
                 <td>{{$task->name}}</td>
-                <td>{{$task->description}}</td>
+                <td>{!!$task->description!!}</td>
                 <td>{{$task->status}}</td>
                 <td>
                     @foreach($task->tags as $tag)

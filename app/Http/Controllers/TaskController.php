@@ -33,6 +33,13 @@ class TaskController extends Controller
         // name dau la cua truong database name sau la cua nguoi dung nhap len dinh nghia trong form
         $task->description = $request->description;
         $task->user_id = Auth::user()->id;
+        $request->validate([
+            'description'=>'required|min:6',
+            'name'=>'required|min:5',
+            'tags'=>'required'
+
+        ]);
+
         $task->save();
 
         $task->tags()->sync($request->get('tags'));
